@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>ToDo App</title>
+</head>
+<body>
+    <div id="main">    
+        <nav id="sidebar">
+            <input type="checkbox" id="sidebar-menu">
+            <label for="sidebar-menu" id="hamburger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </label>
+
+            <nav id="full-sidebar"></nav>
+            <div id="exit-full-sidebar"></div>
+        </nav>  
+
+        <div id="tasks-section" class="batat">
+            <div id="tasks-section-title">
+                <h1 id>Tasks</h1>             
+            </div>
+            <div id="unfinished-tasks" class="tasks-group">
+               <!-- Unfinished Tasks -->
+            </div>
+            <button type="button" id="completed-tasks-btn" class="no-outline-and-border">Completed Tasks</button>
+            <div id="completed-tasks" class="tasks-group">
+                <!-- Completed Tasks -->
+            </div>
+            <button type="button" id="new-task-btn" class="column-center no-outline-and-outline">+</button>
+        </div>  
+    </div>
+    
+    <script src="scripts/main.js"></script>
+</body>
+</html>
