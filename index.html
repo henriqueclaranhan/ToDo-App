@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="main">    
-        <nav id="sidebar">
+        <nav id="sidebar-base" class="column-center sidebar">
             <input type="checkbox" id="sidebar-menu">
             <label for="sidebar-menu" id="hamburger-menu">
                 <div></div>
@@ -16,7 +16,8 @@
                 <div></div>
             </label>
 
-            <nav id="full-sidebar"></nav>
+            <nav id="compact-sidebar" class="column-center sidebar"></nav>
+            <nav id="full-sidebar" class="sidebar"></nav>
             <div id="exit-full-sidebar"></div>
         </nav>  
 
@@ -25,13 +26,16 @@
                 <h1 id>Tasks</h1>             
             </div>
             <div id="unfinished-tasks" class="tasks-group">
-               <!-- Unfinished Tasks -->
+                <!-- Unfinished Tasks -->
             </div>
             <button type="button" id="completed-tasks-btn" class="no-outline-and-border">Completed Tasks</button>
             <div id="completed-tasks" class="tasks-group">
                 <!-- Completed Tasks -->
             </div>
-            <button type="button" id="new-task-btn" class="column-center no-outline-and-outline">+</button>
+            <button type="button" id="new-task-btn" class="column-center no-outline-and-border">
+                <div/>
+                <div/>
+            </button>
         </div>  
     </div>
     
