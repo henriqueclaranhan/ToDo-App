@@ -5,7 +5,7 @@ unfinishedTasks.innerHTML +=
    `
     <div class="task">
         <input class="checkbox" type="checkbox">
-        <p class="task-name">Task task task task task task task task task task task task </p>
+        <p class="task-name teste">Task task task task task task task task task task task task </p>
         <p class="important-task">★</p>
     </div>
     `;
@@ -32,8 +32,21 @@ for (var x=0; x<14; x++){
     ` 
 }
 
+let sidebarMenuCheckbox = document.querySelector("#sidebar-menu")
 let clickExitFullSidebar = document.querySelector('#exit-full-sidebar')
+let newTaskBtn = document.querySelector("#new-task-btn")
 
+// EXIT FULL SIDEBAR
 clickExitFullSidebar.addEventListener('click', function(){
-    document.querySelector("#sidebar-menu").checked = false;
+    sidebarMenuCheckbox.checked = false;
+    newTaskBtn.style = "margin-bottom: 17px;";
+},false)
+
+// SHOW / HIDE NEW TASK BUTTON
+sidebarMenuCheckbox.addEventListener('change', function(){
+    if(sidebarMenuCheckbox.checked){
+        newTaskBtn.style = "margin-bottom: -50%;";
+    } else{
+        newTaskBtn.style = "margin-bottom: 17px;";
+    }
 },false)
