@@ -1,6 +1,8 @@
-body, html{
+body{
     margin: 0;
     overflow: hidden;
+    position: fixed;
+    width: 100%;
     height: 100%;
 }
 #main{
@@ -8,39 +10,49 @@ body, html{
     height: 100%;
     display: flex;
 }
-#full-sidebar, #exit-full-sidebar{
-    height: 110%;
-    top: -10%;
-    left: 44px;
-    transition: 0.25s ease-in-out;
-    position: absolute;
+.sidebar{
+    
+}
+#sidebar-base{
+    background-color: rgb(49, 49, 49);
+    width: 58px;
+    height: 100vh;
+    z-index: 3;
+}
+#sidebar-base * {
+    margin-top: 10px;
+}
+#compact-sidebar{
+    margin-top: -100%;
+    margin-left: 0;
+    background-color: rgb(49, 49, 49);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 #full-sidebar{
-    width: 0px;
+    width: 180px;
+    margin-left: -80%;
     background-color:rgb(49, 49, 49);
     z-index: 1;
+    position: fixed;
 }
 #exit-full-sidebar{
     width: 100%;
     background-color: black;
     opacity: 0;
     visibility: hidden;
+    position: absolute;
 }
-#sidebar{
-    background-color: rgb(49, 49, 49);
-    display: flex;
-    flex-direction: column;
-    width: 56px;
-    height: 100vh;
-    z-index: 3;
-}
-#sidebar * {
-    margin-top: 10px;
-    margin-left: 5px;
+#full-sidebar, #exit-full-sidebar{
+    height: 110%;
+    top: -10%;
+    left: 44px;
+    transition: 0.25s ease-in-out;
 }
 #sidebar-menu[type="checkbox"]:checked ~ #full-sidebar{
-    opacity: 100%;
-    width: 180px;
+    margin-left: 0;
 }
 #sidebar-menu[type="checkbox"]:checked ~ #exit-full-sidebar{
     opacity: 50%;
@@ -51,6 +63,7 @@ body, html{
     opacity: 0;
 }
 #hamburger-menu{
+    z-index: 3;
     cursor: pointer;
     position: relative;
     display: block;
@@ -112,9 +125,7 @@ body, html{
     color: #F5F5F5;
 }
 .tasks-group{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: grid;
     margin-left: 8.5px;
     margin-right: 8.5px;
 }
@@ -136,7 +147,6 @@ body, html{
 .task{
     background-color: rgb(49, 49, 49);
     margin-bottom: 10px;
-    width: 100%;
     min-height: 47px;
     border-radius: 4px;
     position: relative;
@@ -220,18 +230,32 @@ body, html{
     -webkit-tap-highlight-color: transparent;
 }
 #new-task-btn{
-    z-index: 1;
+    z-index: 2;
     cursor: pointer;
-    background-color: rgb(195, 195, 195);
+    background: radial-gradient(#018fee, #0070BB);
     text-align: center;
     border-radius: 50%;
-    width: 56px;
-    height: 56px;
+    width: 57px;
+    height: 57px;
     margin-bottom: 17px;
     margin-right: 17px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     right: 0;
+    -webkit-tap-highlight-color: transparent;
+    transition: .4s ease;
+}
+#new-task-btn:active{
+    background: radial-gradient(#1496ec, #1b7cbd);
+}
+#new-task-btn div{
+    width: 24px;
+    height: 4.5px;
+    border-radius: 1.5px;
+    background-color: #f6f6f6;
+}
+#new-task-btn div:nth-child(1){
+    transform: rotate(90deg);
 }
 .column-center{
     display: inline-flex;
