@@ -33,10 +33,10 @@ body{
 }
 #full-sidebar{
     width: 180px;
-    margin-left: -80%;
+    margin-left:  -80%;
     background-color:rgb(49, 49, 49);
     z-index: 1;
-    position: fixed;
+    position: absolute;
 }
 #exit-full-sidebar{
     width: 100%;
@@ -50,13 +50,6 @@ body{
     top: -10%;
     left: 44px;
     transition: 0.25s ease-in-out;
-}
-#sidebar-menu[type="checkbox"]:checked ~ #full-sidebar{
-    margin-left: 0;
-}
-#sidebar-menu[type="checkbox"]:checked ~ #exit-full-sidebar{
-    opacity: 50%;
-    visibility: visible;
 }
 #sidebar-menu{
     position: absolute;
@@ -256,6 +249,9 @@ body{
 }
 #new-task-btn div:nth-child(1){
     transform: rotate(90deg);
+}
+#new-task-box{
+
 }
 .column-center{
     display: inline-flex;
