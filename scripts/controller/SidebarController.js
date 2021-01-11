@@ -34,10 +34,11 @@ class SidebarController {
         this._fullSidebar.style = "margin-left: -80%;"
     }
 
-    showExitFullSidebarOverlay(opacity = 50){
+    showExitFullSidebarOverlay(opacity = 50, transition = "0.25s ease-in-out"){
         this._clickExitFullSidebar.style = `
             opacity: ${opacity}%;
             visibility: visible;
+            transition: ${transition};
         `
     }
 
@@ -79,6 +80,7 @@ class SidebarController {
         let lastTouch = 0;
         let touchstartX;
         let currentFullSidebarMarginLeft = 0;
+        let opacity= 0;
         
         // EXIT FULL SIDEBAR
         this._clickExitFullSidebar.addEventListener('click', function(){
@@ -95,32 +97,22 @@ class SidebarController {
         this._sidebar.addEventListener('touchmove', function(e) {
             for (let i=0; i < e.touches.length; i++) {
                 touchX = e.touches[i].pageX
-                /*console.log(`
-                lastTouch: ${lastTouch}
-                touchstart: ${touchstartX} 
-                touchX: ${touchX}
-                sidebarIsFull: ${window.sidebar._sidebarIsFull}
-                `);*/
                 currentFullSidebarMarginLeft = parseInt(window.getComputedStyle(window.sidebar._fullSidebar).marginLeft)
+                
                 var fullSidebarMarginLeft = touchX-215;
 
-                console.log(`
-                Margin: ${currentFullSidebarMarginLeft}
-                `)
-
-                let opacity = (currentFullSidebarMarginLeft/20)*10
-
-                console.log("teste: " + opacity)
-
                 if(touchX > lastTouch && !window.sidebar._sidebarIsFull && currentFullSidebarMarginLeft <= 0){
-                    window.sidebar.showExitFullSidebarOverlay(opacity)
+                    if(opacity <= 50){
+                        opacity = (currentFullSidebarMarginLeft/4)+45
+                    }
+
+                    window.sidebar.showExitFullSidebarOverlay(opacity, "none")
                     window.sidebar.hideNewTaskButton();
                     window.sidebar._fullSidebar.style =`
                         transition: none;
                         margin-left: ${fullSidebarMarginLeft}px`
 
                 } else
-
                 if(touchX < lastTouch && touchX < touchstartX && window.sidebar._sidebarIsFull && currentFullSidebarMarginLeft <= 0){
                     window.sidebar.hideNewTaskButton();
                     window.sidebar._fullSidebar.style =`
@@ -131,7 +123,6 @@ class SidebarController {
         }, false);
 
         this._sidebar.addEventListener('touchend', (e) => {
-            console.log("Touchend: " + touchX)
             lastTouch = touchX;
             if(touchX != 0){
                 if (touchX <= 110){
