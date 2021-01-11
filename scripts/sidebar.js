@@ -1,6 +1,8 @@
 let unfinishedTasks = document.querySelector("#unfinished-tasks")
 let completedTasks = document.querySelector("#completed-tasks")
 
+//The lines of code below are for testing purposes only
+
 unfinishedTasks.innerHTML +=
    `
     <div class="task">
