@@ -7,7 +7,7 @@
     <title>ToDo App</title>
 </head>
 <body>
-    <div id="main">    
+    <div id="main">
         <nav id="sidebar-base" class="column-center sidebar">
             <input type="checkbox" id="sidebar-menu">
             <label for="sidebar-menu" id="hamburger-menu">
@@ -19,11 +19,11 @@
             <nav id="compact-sidebar" class="column-center sidebar"></nav>
             <nav id="full-sidebar" class="sidebar"></nav>
             <div id="exit-full-sidebar"></div>
-        </nav>  
+        </nav>
 
-        <div id="tasks-section" class="batat">
+        <div id="tasks-section">
             <div id="tasks-section-title">
-                <h1 id>Tasks</h1>             
+                <h1 id>Tasks</h1>
             </div>
             <div id="unfinished-tasks" class="tasks-group">
                 <!-- Unfinished Tasks -->
@@ -36,8 +36,9 @@
                 <div/>
                 <div/>
             </button>
-        </div>  
+        </div>
     </div>
 </body>
-<script src="./scripts/main.js" type="text/javascript"></script>
+<script src="./scripts/controller/SidebarController.js"></script>
+<script src="./scripts/sidebar.js" type="text/javascript"></script>
 </html>
