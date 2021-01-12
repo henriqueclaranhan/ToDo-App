@@ -1,7 +1,7 @@
+sidebar = new SidebarController();
+
 let unfinishedTasks = document.querySelector("#unfinished-tasks")
 let completedTasks = document.querySelector("#completed-tasks")
-
-//The lines of code below are for testing purposes only
 
 unfinishedTasks.innerHTML +=
    `
@@ -33,22 +33,3 @@ for (var x=0; x<14; x++){
     </div>
     ` 
 }
-
-let sidebarMenuCheckbox = document.querySelector("#sidebar-menu")
-let clickExitFullSidebar = document.querySelector('#exit-full-sidebar')
-let newTaskBtn = document.querySelector("#new-task-btn")
-
-// EXIT FULL SIDEBAR
-clickExitFullSidebar.addEventListener('click', function(){
-    sidebarMenuCheckbox.checked = false;
-    newTaskBtn.style = "margin-bottom: 17px;";
-},false)
-
-// SHOW / HIDE NEW TASK BUTTON
-sidebarMenuCheckbox.addEventListener('change', function(){
-    if(sidebarMenuCheckbox.checked){
-        newTaskBtn.style = "margin-bottom: -50%;";
-    } else{
-        newTaskBtn.style = "margin-bottom: 17px;";
-    }
-},false)
