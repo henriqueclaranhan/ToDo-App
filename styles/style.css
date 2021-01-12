@@ -10,9 +10,6 @@ body{
     height: 100%;
     display: flex;
 }
-.sidebar{
-    
-}
 #sidebar-base{
     background-color: rgb(49, 49, 49);
     width: 58px;
@@ -33,23 +30,32 @@ body{
 }
 #full-sidebar{
     width: 180px;
-    margin-left:  -80%;
-    background-color:rgb(49, 49, 49);
+    margin-left: -80%;
+    background-color: rgb(49, 49, 49);
+    z-index: 1;
+}
+#full-sidebar:before{
+    content: "";
+    width: 180px;
+    left: -180px;
+    background-color: rgb(49, 49, 49);
     z-index: 1;
     position: absolute;
+    height: 110%;
+    top: -10%;
 }
 #exit-full-sidebar{
     width: 100%;
     background-color: black;
     opacity: 0;
     visibility: hidden;
-    position: absolute;
 }
 #full-sidebar, #exit-full-sidebar{
     height: 110%;
     top: -10%;
     left: 44px;
     transition: 0.25s ease-in-out;
+    position: absolute;
 }
 #sidebar-menu{
     position: absolute;
@@ -119,8 +125,7 @@ body{
 }
 .tasks-group{
     display: grid;
-    margin-left: 8.5px;
-    margin-right: 8.5px;
+    margin: 0 8.5px 0 8.5px;
 }
 #unfinished-tasks{
     margin-bottom: 15px;
@@ -136,6 +141,7 @@ body{
 }
 #completed-tasks{
     margin-top: 10px;
+    margin-bottom: 3px;
 }
 .task{
     background-color: rgb(49, 49, 49);
@@ -218,8 +224,7 @@ body{
     border: 6px solid transparent;
     font-size: 23px;
     position: absolute;
-    right: 0;
-    margin-right: 4px;
+    right: 4px;
     -webkit-tap-highlight-color: transparent;
 }
 #new-task-btn{
@@ -230,8 +235,7 @@ body{
     border-radius: 50%;
     width: 57px;
     height: 57px;
-    margin-bottom: 17px;
-    margin-right: 17px;
+    margin: 0 17px 17px 0;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -250,9 +254,9 @@ body{
 #new-task-btn div:nth-child(1){
     transform: rotate(90deg);
 }
-#new-task-box{
+/*#new-task-box{
 
-}
+}*/
 .column-center{
     display: inline-flex;
     flex-direction: column;

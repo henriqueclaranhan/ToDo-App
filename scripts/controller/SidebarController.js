@@ -3,7 +3,7 @@ class SidebarController {
         this._sidebarIsFull;
 
         this._sidebarMenuCheckbox = document.querySelector("#sidebar-menu")
-        this._sidebar = document.querySelector(".sidebar")
+        this._sidebarElements = document.querySelector(".sidebar")
         this._compactSidebar = document.querySelector("#compact-sidebar")
         this._fullSidebar = document.querySelector("#full-sidebar")
         this._clickExitFullSidebar = document.querySelector('#exit-full-sidebar')
@@ -26,15 +26,19 @@ class SidebarController {
         this._newTaskBtn.style = "margin-bottom: -50%;";
     }
 
-    showFullSidebar(){
-        this._fullSidebar.style = "transition: 0.25s;margin-left: 0;";
+    showFullSidebar(marginLeft = "0", transition="0.25s ease-in-out"){
+        this._fullSidebar.style = `
+            margin-left: ${marginLeft};
+            transition: ${transition};`;
     }
 
-    hideFullSidebar(){
-        this._fullSidebar.style = "margin-left: -80%;"
+    hideFullSidebar(marginLeft = "-80%", transition="0.25s ease-in-out"){
+        this._fullSidebar.style = `
+        margin-left: ${marginLeft};
+        transition: ${transition};`;
     }
 
-    showExitFullSidebarOverlay(opacity = 50, transition = "0.25s ease-in-out"){
+    showExitFullSidebarOverlay(opacity = 50, transition="0.25s ease-in-out"){
         this._clickExitFullSidebar.style = `
             opacity: ${opacity}%;
             visibility: visible;
@@ -49,27 +53,31 @@ class SidebarController {
         `
     }
 
-    showFullSidebarEvent(){
-        window.sidebar.showFullSidebar();
-        window.sidebar.hideNewTaskButton();
-        window.sidebar.showExitFullSidebarOverlay();
-        window.sidebar._sidebarIsFull = true;
+    showFullSidebarEvent(whereThisWasCalledFrom){
+        let sidebarTransition = (whereThisWasCalledFrom == "touchend") ? "0s" : undefined;
+        
+        sidebar.showFullSidebar(0, sidebarTransition);
+        sidebar.hideNewTaskButton();
+        sidebar.showExitFullSidebarOverlay();
+        sidebar._sidebarIsFull = true;
+        this._sidebarMenuCheckbox.checked = true;
     }
 
     hideFullSidebarEvent(){
-        window.sidebar.hideFullSidebar();
-        window.sidebar.showNewTaskButton();
-        window.sidebar.hideExitFullSidebarOverlay();
-        window.sidebar._sidebarIsFull = false;
+        sidebar.hideFullSidebar();
+        sidebar.showNewTaskButton();
+        sidebar.hideExitFullSidebarOverlay();
+        sidebar._sidebarIsFull = false;
+        this._sidebarMenuCheckbox.checked = false;
     }
 
     initMenuEvents(){
         // SHOW / HIDE NEW TASK BUTTON
         this._sidebarMenuCheckbox.addEventListener('change', function(){
             if(this.checked){
-                window.sidebar.showFullSidebarEvent();
+                sidebar.showFullSidebarEvent();
             } else{
-                window.sidebar.hideFullSidebarEvent();
+                sidebar.hideFullSidebarEvent();
             }
         },false)
     }
@@ -80,61 +88,69 @@ class SidebarController {
         let lastTouch = 0;
         let touchstartX;
         let currentFullSidebarMarginLeft = 0;
-        let opacity= 0;
+        let overlayOpacity= 0;
         
         // EXIT FULL SIDEBAR
         this._clickExitFullSidebar.addEventListener('click', function(){
-            window.sidebar._sidebarMenuCheckbox.checked = false;
-            window.sidebar.hideFullSidebarEvent();
+            sidebar.hideFullSidebarEvent();
         },false)
 
-        this._sidebar.addEventListener('touchstart', function(e) {
+        this._sidebarElements.addEventListener('touchstart', function(e) {
             for (let i=0; i < e.touches.length; i++) {
                 touchstartX = e.touches[i].pageX;
             }
         }, false);
 
-        this._sidebar.addEventListener('touchmove', function(e) {
+        this._sidebarElements.addEventListener('touchmove', function(e) {
             for (let i=0; i < e.touches.length; i++) {
-                touchX = e.touches[i].pageX
-                currentFullSidebarMarginLeft = parseInt(window.getComputedStyle(window.sidebar._fullSidebar).marginLeft)
-                
-                var fullSidebarMarginLeft = touchX-215;
+                touchX = e.touches[i].pageX;
+                currentFullSidebarMarginLeft =(parseInt(window.getComputedStyle(sidebar._fullSidebar).marginLeft)*100/screen.width);
 
-                if(touchX > lastTouch && !window.sidebar._sidebarIsFull && currentFullSidebarMarginLeft <= 0){
-                    if(opacity <= 50){
-                        opacity = (currentFullSidebarMarginLeft/4)+45
+                let fullSidebarMarginLeft = touchX-215;
+
+                overlayOpacity = ((currentFullSidebarMarginLeft/100*screen.width)/4)+43;
+
+                if(touchX > 56){
+                    sidebar.hideNewTaskButton();
+
+                    if(overlayOpacity <= 50){
+                        sidebar.showExitFullSidebarOverlay(overlayOpacity, "none");
                     }
 
-                    window.sidebar.showExitFullSidebarOverlay(opacity, "none")
-                    window.sidebar.hideNewTaskButton();
-                    window.sidebar._fullSidebar.style =`
-                        transition: none;
-                        margin-left: ${fullSidebarMarginLeft}px`
-
-                } else
-                if(touchX < lastTouch && touchX < touchstartX && window.sidebar._sidebarIsFull && currentFullSidebarMarginLeft <= 0){
-                    window.sidebar.hideNewTaskButton();
-                    window.sidebar._fullSidebar.style =`
-                        transition: none;
-                        margin-left: ${fullSidebarMarginLeft}px`
+                } else{
+                    sidebar.showNewTaskButton();
+                    sidebar.showExitFullSidebarOverlay(0);
                 }
+
+                if(currentFullSidebarMarginLeft >= 0){
+                    sidebar.showFullSidebarEvent();
+                } else if(currentFullSidebarMarginLeft < 0) {
+                    sidebar.showFullSidebar(`${fullSidebarMarginLeft}px`, "none");
+                    sidebar._sidebarMenuCheckbox.checked = (touchX <= 110) ? false : true;
+                    touchstartX = touchX;
+                }
+
+                if(sidebar._sidebarIsFull){
+                    if(currentFullSidebarMarginLeft <= 0 && touchX <= 216 && touchstartX>touchX){
+                        sidebar.hideFullSidebar(`${fullSidebarMarginLeft}px`, "none");
+                    }
+                }
+
             }
         }, false);
 
-        this._sidebar.addEventListener('touchend', (e) => {
+        this._sidebarElements.addEventListener('touchend', (e) => {
             lastTouch = touchX;
+            overlayOpacity= 0;
+
             if(touchX != 0){
                 if (touchX <= 110){
-                    this._sidebarMenuCheckbox.checked = false;
-                    window.sidebar.hideFullSidebarEvent();
+                    sidebar.hideFullSidebarEvent();
                 } else {
-                    this._sidebarMenuCheckbox.checked = true;
-                    window.sidebar.showFullSidebarEvent();
+                    sidebar.showFullSidebarEvent("touchend");
                 }
                 touchX = 0;
             }
-            
         }, false);
     }
 
