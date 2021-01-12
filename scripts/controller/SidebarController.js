@@ -17,6 +17,10 @@ class SidebarController {
     initialize(){
         this._sidebarIsFull = false;
     }
+
+    getCompactSidebarWidth(){
+        return parseInt(window.getComputedStyle(sidebar._compactSidebar).width)
+    }
     
     showNewTaskButton(){
         this._newTaskBtn.style = "margin-bottom: 17px;";
@@ -93,8 +97,9 @@ class SidebarController {
         // EXIT FULL SIDEBAR
         this._clickExitFullSidebar.addEventListener('click', function(){
             sidebar.hideFullSidebarEvent();
-        },false)
+        }, false)
 
+        // SIDEBAR
         this._sidebarElements.addEventListener('touchstart', function(e) {
             for (let i=0; i < e.touches.length; i++) {
                 touchstartX = e.touches[i].pageX;
@@ -125,27 +130,32 @@ class SidebarController {
                 if(currentFullSidebarMarginLeft >= 0){
                     sidebar.showFullSidebarEvent();
                 } else if(currentFullSidebarMarginLeft < 0) {
+                    //console.log("pra direita")
+                    touchstartX = 227;
                     sidebar.showFullSidebar(`${fullSidebarMarginLeft}px`, "none");
                     sidebar._sidebarMenuCheckbox.checked = (touchX <= 110) ? false : true;
-                    touchstartX = touchX;
                 }
 
+                lastTouch = touchX;
+
                 if(sidebar._sidebarIsFull){
-                    if(currentFullSidebarMarginLeft <= 0 && touchX <= 216 && touchstartX>touchX){
+                    if(currentFullSidebarMarginLeft <= 1 && touchX <= 216 && touchstartX>touchX && touchX > 56){
+                        //console.log("pra esquerda")
                         sidebar.hideFullSidebar(`${fullSidebarMarginLeft}px`, "none");
                     }
                 }
-
             }
         }, false);
 
         this._sidebarElements.addEventListener('touchend', (e) => {
-            lastTouch = touchX;
-            overlayOpacity= 0;
+            overlayOpacity = 0;
+            touchstartX = 0;
 
             if(touchX != 0){
-                if (touchX <= 110){
-                    sidebar.hideFullSidebarEvent();
+                if (lastTouch <= 110 && !sidebar._sidebarMenuCheckbox.checked){
+                    if(lastTouch > this.getCompactSidebarWidth() || currentFullSidebarMarginLeft<=0){
+                        sidebar.hideFullSidebarEvent(); 
+                    }   
                 } else {
                     sidebar.showFullSidebarEvent("touchend");
                 }

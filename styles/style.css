@@ -125,7 +125,7 @@ body{
 }
 .tasks-group{
     display: grid;
-    margin: 0 8.5px 0 8.5px;
+    margin: 0 9.5px 0 9.5px;
 }
 #unfinished-tasks{
     margin-bottom: 15px;
