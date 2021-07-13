@@ -74,7 +74,7 @@ body{
     position: absolute;
     display: block;
     width: 100%;
-    height: 4px;
+    height: 3px;
     border-radius: 1.6px;
     background-color: #F5F5F5;
     transition: 0.25s ease-out;
@@ -91,7 +91,7 @@ body{
 #sidebar-menu:checked + #hamburger-menu div:nth-child(1) {
     transform: rotate(+45deg);
     top: 9px;
-    height: 5px;
+    height: 4px;
 }
 #sidebar-menu:checked + #hamburger-menu div:nth-child(2) {
     opacity: 0;
@@ -99,7 +99,7 @@ body{
 #sidebar-menu:checked + #hamburger-menu div:nth-child(3) {
     transform: rotate(-45deg);
     top: 9px;
-    height: 5px;
+    height: 4px;
 }
 #tasks-section{
     background-color: rgb(70, 70, 70);
@@ -145,14 +145,31 @@ body{
 }
 .task{
     background-color: rgb(49, 49, 49);
-    margin-bottom: 10px;
+
+    -webkit-box-shadow: 0 6px 10px 0 rgb(47, 47, 47);
+    -moz-box-shadow: 0 6px 10px 0 rgb(47, 47, 47);
+    box-shadow: 0 4px 10px 0 rgba(47, 47, 47, 0.616);
+    
+    opacity: 100%;
+    margin-bottom: 8px;
     min-height: 47px;
     border-radius: 4px;
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    transition: 0.25s ease-out;
 }
+
+.closeSlide {
+    margin-bottom: 0;
+    height: 0px;
+    
+    transition: 0.2s all ease-out;
+    /*Just reverse any spacing styling you've applied to make it **magically** disappear*/
+  }
+
 .task .checkbox{
     all: unset;
     cursor: pointer;
@@ -240,7 +257,6 @@ body{
     bottom: 0;
     right: 0;
     -webkit-tap-highlight-color: transparent;
-    transition: .4s ease;
 }
 #new-task-btn:active{
     background: radial-gradient(#1496ec, #1b7cbd);
@@ -266,4 +282,13 @@ body{
 .no-outline-and-border{
     outline: none;
     border: none;
+}
+
+@keyframes removeTask {
+    0% {
+        opacity: initial;
+    }
+    100% {
+        opacity: 0%;
+    }
 }

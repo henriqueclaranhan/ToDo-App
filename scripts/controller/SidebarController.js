@@ -1,5 +1,5 @@
 class SidebarController {
-    constructor(){
+    constructor() {
         this._sidebarIsFull;
 
         this._sidebarMenuCheckbox = document.querySelector("#sidebar-menu")
